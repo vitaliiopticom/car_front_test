@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { useProfile } from '@/modules/users';
 import {
   ActionMenuItemProps,
   ActionsMenu,
@@ -24,6 +24,10 @@ import {
   VehicleDetailSkeletons,
 } from '../components/VehicleDetailSkeletons';
 import { VehicleDetailParams } from '../types';
+import {
+  AssignQualityCheckUserMutationRequest,
+  useAssignQualityCheckUserMutation,
+} from '@/modules/content/api/assignQualityCheckUser';
 
 export const ContentDetailPage: FC = () => {
   const { t } = useTranslation();
@@ -40,6 +44,39 @@ export const ContentDetailPage: FC = () => {
   const getVehicleByIdQuery = useGetVehicleByIdQuery({
     variables: { vehicleId: id },
   });
+
+  const vehicle = getVehicleByIdQuery.data?.vehicleDetail.vehicle;
+
+  const [assignQualityCheckUser] = useAssignQualityCheckUserMutation();
+  const { profile } = useProfile();
+
+  /**
+   * Handles the assignment of a user to a vehicle for quality check.
+   *
+   * @param {string} vehicleId - The ID of the vehicle.
+   * @param {string} userId - The ID of the user.
+   * @returns {Promise<void>} - A promise that resolves when the assignment is completed.
+   */
+  const handleAssignUser = async (
+    vehicleId: string,
+    userId: string,
+  ): Promise<void> => {
+    const photoQualityCheckUser: AssignQualityCheckUserMutationRequest['photoQualityCheckUser'] =
+      {
+        userId: userId,
+        vehicleId: vehicleId,
+      };
+
+    await assignQualityCheckUser({
+      variables: { photoQualityCheckUser },
+    });
+  };
+
+  useEffect(() => {
+    if (vehicle && vehicle.photoQualityCheckerUserId === null) {
+      handleAssignUser(vehicle.id, profile?.id || '');
+    }
+  }, [getVehicleByIdQuery.data]);
 
   const actionMenuItems: ActionMenuItemProps[] = [
     {

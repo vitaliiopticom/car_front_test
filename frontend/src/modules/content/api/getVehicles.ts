@@ -48,6 +48,8 @@ export const VEHICLES_QUERY = gql`
           modelYear
           fuelType
           bodyType
+          photoQualityCheckStatus
+          photoQualityCheckerUserId
         }
       }
       photoBoxStatus

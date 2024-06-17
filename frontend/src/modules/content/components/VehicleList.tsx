@@ -306,6 +306,8 @@ export const VehicleList: FC<Props> = ({ isLoading = false }) => {
                       displayCompanyName={displayedCompanyName}
                       isDisabled={getIsVehicleLinkDisabled(item?.detail)}
                       item={item}
+                      photoQualityCheckStatus={item.photoQualityCheckStatus}
+                      photoQualityCheckerUserId={item.photoQualityCheckerUserId}
                     />
                   ))}
             </div>

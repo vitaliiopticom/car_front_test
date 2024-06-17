@@ -13,9 +13,10 @@ import { VehicleCardType } from '../api/getVehicles';
 import { GeoLocationLink } from '../components/GeoLocationLink';
 import { PhotoInfoChip } from '../components/PhotoInfoChip';
 import { CONTENT_ITEM_TYPE, FALLBACK_IMAGE } from '../constants';
-import { ImageCount, PhotoType } from '../types';
+import { ImageCount, PhotoType, QualityCheckStatus } from '../types';
 
 import { DownloadIconButton } from './DownloadIconButton';
+import { IconQualityCheckStatus } from '@/modules/content/components/IconQualityCheck';
 
 const getPhotoGroupCount = (images: ImageCount[], key: PhotoType): number => {
   const group = images.find((image) => image['photoType'] === key);
@@ -33,6 +34,8 @@ type Props = {
   item: VehicleCardType;
   isDisabled?: boolean;
   displayCompanyName?: boolean;
+  photoQualityCheckStatus?: QualityCheckStatus;
+  photoQualityCheckerUserId?: string;
 };
 
 export const VehicleCard: FC<Props> = ({
@@ -57,6 +60,8 @@ export const VehicleCard: FC<Props> = ({
   },
   isDisabled = false,
   displayCompanyName,
+  photoQualityCheckStatus,
+  photoQualityCheckerUserId,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -142,12 +147,21 @@ export const VehicleCard: FC<Props> = ({
         />
         <div className="absolute left-0 top-0 h-full w-full bg-black opacity-0 group-hover:opacity-40" />
         {contentItemsCount > 0 && (
-          <DownloadIconButton
-            className="absolute right-2 top-2 opacity-0 transition ease-in-out group-hover:opacity-100"
-            downloadUri={processedImagesArchiveUri}
-            tooltipContent={t('content.DownloadProcessedPhotos')}
-            tooltipPlacement="left"
-          />
+          <>
+            <DownloadIconButton
+              className="absolute right-2 top-2 opacity-0 transition ease-in-out group-hover:opacity-100"
+              downloadUri={processedImagesArchiveUri}
+              tooltipContent={t('content.DownloadProcessedPhotos')}
+              tooltipPlacement="left"
+            />
+
+            <div className="absolute left-2 top-2 rounded-md text-primary opacity-0 opacity-100 transition ease-in-out">
+              <IconQualityCheckStatus
+                status={photoQualityCheckStatus}
+                userID={photoQualityCheckerUserId}
+              />
+            </div>
+          </>
         )}
       </div>
       {Details}

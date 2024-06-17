@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Heading } from '@/components/elements';
+import { Avatar, Button, Heading } from '@/components/elements';
 import { FetchFile } from '@/components/shared';
 import { useTranslation } from '@/i18n';
 
@@ -9,6 +9,7 @@ import { FileEvidenceState, GalleryItem, VehicleDetails } from '../types';
 import { getFilesEvidenceState, getVideosDowloadUris } from '../utils';
 
 import { PhotosList } from './PhotosList';
+import { useGetUserByIdQuery } from '@/modules/users/api/getUserById';
 
 type DetailHeaderTranslationValue = {
   photosCount?: number;
@@ -68,12 +69,35 @@ export const VehicleDetail: React.FC<Props> = ({
   const videosAvailable =
     filesEvidenceState !== FILES_EVIDENCE_STATE.onlyPhotos;
 
+  const { data: userData } = useGetUserByIdQuery({
+    variables: { input: { id: vehicle.photoQualityCheckerUserId || '' } },
+    skip: !vehicle.photoQualityCheckerUserId,
+  });
+
   return (
     <>
-      <div className="mb-8 flex flex-wrap">
-        <Heading className="mb-2" variant="h3">
-          {contentDetailHeaderTranslation}
-        </Heading>
+      <div className="mb-8 flex flex-wrap ">
+        <div className="flex items-center">
+          <Heading className="mb-2" variant="h3">
+            {contentDetailHeaderTranslation}
+          </Heading>
+          {vehicle.photoQualityCheckerUserId && (
+            <>
+              <Heading className="mb-2" variant="h3">
+                <span className="mx-2">-</span>
+                {t('content.reviewedBy')}
+              </Heading>
+              {vehicle.photoQualityCheckerUserId && (
+                <Avatar
+                  alt={userData?.user.firstname || ''}
+                  imgUrl={userData?.user.photoUrl}
+                  name={userData?.user.firstname || ''}
+                  size="md"
+                />
+              )}
+            </>
+          )}
+        </div>
 
         <div className="flex flex-grow flex-wrap justify-end gap-4">
           {videosAvailable && (

@@ -21,6 +21,7 @@ export const VEHICLE_QUERY = gql`
         modelYear
         bodyType
         fuelType
+        photoQualityCheckerUserId
       }
       imageCounts {
         photoType
@@ -29,6 +30,12 @@ export const VEHICLE_QUERY = gql`
       images {
         id
         vehicleId
+        qualityCheck {
+          isQualityGood
+          qualityCheckStatus
+          issues
+          comments
+        }
         image {
           name
           contentType

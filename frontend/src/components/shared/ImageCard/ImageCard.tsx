@@ -8,6 +8,8 @@ import {
   Link,
 } from '@/components/elements';
 import { cx } from '@/utils/classNames';
+import { QualityCheckStatus } from '@/modules/content/types';
+import { IconQualityCheckStatus } from '@/modules/content/components/IconQualityCheck';
 
 type Props = {
   coverImage?: string;
@@ -15,6 +17,7 @@ type Props = {
   coverImageFallback?: string;
   className?: string;
   imageIcon?: IconName;
+  qualityCheck?: QualityCheckStatus;
 } & (
   | { navigateTo: string; onClick?: never }
   | { navigateTo?: never; onClick: () => void }
@@ -28,6 +31,7 @@ export const ImageCard: FC<Props> = ({
   navigateTo,
   className,
   imageIcon,
+  qualityCheck,
 }) => {
   const imgAttributes = {
     alt: 'alt',
@@ -51,7 +55,12 @@ export const ImageCard: FC<Props> = ({
           type="button"
           onClick={onClick}
         >
-          {image}
+          <div className="relative">
+            <div className="absolute left-2 top-2">
+              <IconQualityCheckStatus status={qualityCheck} />
+            </div>
+            {image}
+          </div>
         </button>
       )}
       {!!navigateTo && <Link to={navigateTo}>{image}</Link>}

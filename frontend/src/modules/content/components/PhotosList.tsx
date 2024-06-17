@@ -69,6 +69,7 @@ export const PhotosList: React.FC<Props> = ({
             }
             imageIcon={isVideoContent ? 'play' : undefined}
             onClick={() => onOpenModal(internalPosition)}
+            qualityCheck={contentItem.qualityCheck?.qualityCheckStatus}
           >
             <p className="text-md font-normal text-secondary-tint-50">
               {filePosition}
