@@ -3,7 +3,7 @@
 ## Requirements
 
 - Yarn (1.22.x +)
-- Node v18
+- Node v16
 
 ## Project setup
 
