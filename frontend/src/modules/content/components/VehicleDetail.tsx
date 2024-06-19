@@ -92,7 +92,7 @@ export const VehicleDetail: React.FC<Props> = ({
                   alt={userData?.user.firstname || ''}
                   imgUrl={userData?.user.photoUrl}
                   name={userData?.user.firstname || ''}
-                  size="md"
+                  size="lg"
                 />
               )}
             </>

@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useState } from 'react';
-import { Button, Heading, Image, Status, Text } from '@/components/elements';
+import { Button, Heading, Image, Status, Text, Tooltip } from '@/components/elements';
 import { useTranslation } from '@/i18n';
 import { createFullNameFromUser } from '@/modules/users';
 import { cx } from '@/utils/classNames';
@@ -60,13 +60,15 @@ export const GalleryAside: FC<Props> = ({
             {`${t('content.original')}:`}
           </Text>
 
-          <Image
-            alt="original"
-            className="rounded-md"
-            fallbackPath={FALLBACK_IMAGE}
-            src={originalImage?.thumbnailUri || FALLBACK_IMAGE}
-            onClick={() => onOriginalImageClick(true)}
-          />
+          <Tooltip content={t('content.clickToCompare')} placement="right">
+            <Image
+              alt="original"
+              className="rounded-md"
+              fallbackPath={FALLBACK_IMAGE}
+              src={originalImage?.thumbnailUri || FALLBACK_IMAGE}
+              onClick={() => onOriginalImageClick(true)}
+            />
+          </Tooltip>
         </>
       )}
 
