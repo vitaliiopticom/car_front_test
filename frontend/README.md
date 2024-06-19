@@ -3,7 +3,7 @@
 ## Requirements
 
 - Yarn (1.22.x +)
-- Node v16
+- Node v18
 
 ## Project setup
 
@@ -35,5 +35,5 @@ Project is using Prettier and ESLint for code formatting and embracing quality c
 - **utils** - generic utils
 - **router** - router definitions and utils
 - **modules** -> main entrypoint for most changes and features split by
-    module category. Folder structure is similar to the generic one but contains
-    only specific files and utilities for the given module.
+  module category. Folder structure is similar to the generic one but contains
+  only specific files and utilities for the given module.
