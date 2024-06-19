@@ -21,7 +21,7 @@ export const GalleryContent: FC<Props> = ({
   isComparison,
   setIsComparison,
 }) => {
-  const { id, image, video, originalImage, position, contentType } =
+  const { id, image, video, originalImage, position, contentType, vehicleId } =
     contentItem;
 
   return (
@@ -31,6 +31,8 @@ export const GalleryContent: FC<Props> = ({
           contentType={contentType}
           photosEditable={photosEditable}
           position={position}
+          vehicleId={vehicleId || ''}
+          vehicleImageId={id}
         />
         {isVideoContent ? (
           <VideoPlayer

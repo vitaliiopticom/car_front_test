@@ -28,6 +28,7 @@ import {
   AssignQualityCheckUserMutationRequest,
   useAssignQualityCheckUserMutation,
 } from '@/modules/content/api/assignQualityCheckUser';
+import { ContentTypeProvider } from './ContentTypeContext';
 
 export const ContentDetailPage: FC = () => {
   const { t } = useTranslation();
@@ -98,72 +99,74 @@ export const ContentDetailPage: FC = () => {
     !!make || !!model || !!modelYear || !!fuelType || !!bodyType;
 
   return (
-    <Page
-      actions={
-        <ActionsMenu
-          items={actionMenuItems}
-          placement="left"
-          wrapperClassName="mr-8"
-        />
-      }
-      headerContent={
-        vehicleDetailData ? (
-          <div className="flex flex-wrap items-center gap-x-6 pl-7">
-            {isVinDecoded ? (
+    <ContentTypeProvider>
+      <Page
+        actions={
+          <ActionsMenu
+            items={actionMenuItems}
+            placement="left"
+            wrapperClassName="mr-8"
+          />
+        }
+        headerContent={
+          vehicleDetailData ? (
+            <div className="flex flex-wrap items-center gap-x-6 pl-7">
+              {isVinDecoded ? (
+                <Text size="sm">
+                  {getStringWithSeparator([
+                    make,
+                    model,
+                    modelYear,
+                    bodyType,
+                    fuelType,
+                  ])}
+                </Text>
+              ) : (
+                <Tooltip content={t('content.vinNotDecoded')}>
+                  <IconButton
+                    className="h-5.5 w-5.5 rounded-full p-px"
+                    name={'exclamation'}
+                    size="sm"
+                  />
+                </Tooltip>
+              )}
               <Text size="sm">
-                {getStringWithSeparator([
-                  make,
-                  model,
-                  modelYear,
-                  bodyType,
-                  fuelType,
-                ])}
+                {formatDateTime(new Date(vehicleDetailData.createdAt))}
               </Text>
-            ) : (
-              <Tooltip content={t('content.vinNotDecoded')}>
-                <IconButton
-                  className="h-5.5 w-5.5 rounded-full p-px"
-                  name={'exclamation'}
-                  size="sm"
-                />
-              </Tooltip>
-            )}
-            <Text size="sm">
-              {formatDateTime(new Date(vehicleDetailData.createdAt))}
-            </Text>
-          </div>
-        ) : (
-          <VehicleDetailSkeletons type={VEHICLE_DETAILS_SKELETON_TYPE.HEADER} />
-        )
-      }
-      title={vehicleDetailData?.vin}
-      backButton
-    >
-      <QueryDataLoader
-        loader={<VehicleDetailSkeletons />}
-        query={getVehicleByIdQuery}
+            </div>
+          ) : (
+            <VehicleDetailSkeletons type={VEHICLE_DETAILS_SKELETON_TYPE.HEADER} />
+          )
+        }
+        title={vehicleDetailData?.vin}
+        backButton
       >
-        {({ data: { vehicleDetail } }) => (
-          <VehicleDetailContentManager
-            vehicleDetail={vehicleDetail}
-            vehicleId={id}
-          />
+        <QueryDataLoader
+          loader={<VehicleDetailSkeletons />}
+          query={getVehicleByIdQuery}
+        >
+          {({ data: { vehicleDetail } }) => (
+            <VehicleDetailContentManager
+              vehicleDetail={vehicleDetail}
+              vehicleId={id}
+            />
+          )}
+        </QueryDataLoader>
+        {vehicleDetailData && (
+          <>
+            <ChangeVinNumberModal
+              isOpen={changeVinNumberModal.isOpen}
+              vehicle={vehicleDetailData}
+              onClose={changeVinNumberModal.onClose}
+            />
+            <VehicleDeleteConfirmModal
+              isOpen={vehicleDeleteConfirmModal.isOpen}
+              vehicle={vehicleDetailData}
+              onClose={vehicleDeleteConfirmModal.onClose}
+            />
+          </>
         )}
-      </QueryDataLoader>
-      {vehicleDetailData && (
-        <>
-          <ChangeVinNumberModal
-            isOpen={changeVinNumberModal.isOpen}
-            vehicle={vehicleDetailData}
-            onClose={changeVinNumberModal.onClose}
-          />
-          <VehicleDeleteConfirmModal
-            isOpen={vehicleDeleteConfirmModal.isOpen}
-            vehicle={vehicleDetailData}
-            onClose={vehicleDeleteConfirmModal.onClose}
-          />
-        </>
-      )}
-    </Page>
+      </Page>
+    </ContentTypeProvider>
   );
 };
