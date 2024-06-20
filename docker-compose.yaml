@@ -24,7 +24,9 @@ services:
     networks:
       - caropticom_frontend
   dotnet-tool:
-    image: acrcaropticomwesteuropedev002.azurecr.io/caropticom-dotnet-tools:latest
+    build:
+      context: .
+      dockerfile: ./tools/Dockerfile.DotnetTools
     tty: true
     stdin_open: true
     volumes:
