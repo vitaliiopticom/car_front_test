@@ -26,7 +26,7 @@ export const ContentPage = () => {
 
   const tabs = [
     {
-      title: t('content.automobile'),
+      title: t('content.automobiles'),
       content: <ContentAutomobileTab />,
     },
     {

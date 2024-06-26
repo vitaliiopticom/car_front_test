@@ -1,7 +1,7 @@
 // Import necessary modules and components
 import { FC, useEffect, useState } from 'react';
 
-import { Avatar, Tooltip } from '@/components/elements';
+import { Avatar, Spinner, Tooltip } from '@/components/elements';
 import { QualityCheckStatus } from '@/modules/content/types';
 import { useGetUserByIdQuery } from '@/modules/users/api/getUserById';
 import { Image } from '@/components/elements';
@@ -47,7 +47,7 @@ export const IconQualityCheckStatus: FC<Props> = ({ status, userID }) => {
   // Map statuses to icons wrapped with Tooltip
   const statusIconMap = {
     CHECKED: (
-      <Tooltip content={t('content.Checked')}>
+      <Tooltip content={t('content.qualityCheckStatus.checked')}>
         <Image
           alt="Checked"
           src="/images/icons/check.svg"
@@ -57,7 +57,7 @@ export const IconQualityCheckStatus: FC<Props> = ({ status, userID }) => {
       </Tooltip>
     ),
     CHECKED_WITH_ERRORS: (
-      <Tooltip content={t('content.CheckedWithErrors')}>
+      <Tooltip content={t('content.qualityCheckStatus.checkedWithErrors')}>
         <Image
           alt="Checked with errors"
           src="/images/icons/warning.svg"
@@ -67,9 +67,28 @@ export const IconQualityCheckStatus: FC<Props> = ({ status, userID }) => {
       </Tooltip>
     ),
     UNCHECKED: null,
-    IN_PROGRESS: avatar ? (
-      <Tooltip content={t('content.InProgress')}>{avatar}</Tooltip>
-    ) : null,
+    IN_PROGRESS: (
+      <Tooltip
+        content={
+          t('content.qualityCheckStatus.inProgress') +
+          ' ' +
+          '(' +
+          userData?.user.firstname +
+          ')'
+        }
+      >
+        {userData && userData.user ? (
+          <Avatar
+            alt={userData.user.firstname || ''}
+            imgUrl={userData.user.photoUrl || ''}
+            name={userData.user.firstname || ''}
+            size="lg"
+          />
+        ) : (
+          <Spinner className="right-2 text-primary" size="lg" />
+        )}
+      </Tooltip>
+    ),
   };
 
   // Return the icon based on the status

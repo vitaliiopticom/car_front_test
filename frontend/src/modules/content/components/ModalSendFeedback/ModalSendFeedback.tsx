@@ -96,33 +96,33 @@ const ModalSendFeedback: React.FC<ModalSendFeedbackProps> = ({
         isOpen={isOpen}
         modalClassName="max-w-5xl w-full"
         submitLabel={t('common.send')}
-        title={t('common.sendQualityFeedback')}
+        title={t('content.sendQualityFeedback')}
         onClose={onClose}
         onSubmit={handleSubmit}
       >
         <div className="flex justify-between">
           <div className="w-2/3 space-y-4 pr-4">
             <p className="mb-4">
-              {t('common.sendFeedbackForPhotos', { count: 4 })}
+              {t('content.sendFeedbackForPhotos', { count: 4 })}
             </p>
             <TextareaField
-              label={t('common.comments')}
+              label={t('common.addComments')}
               className="mb-4 w-full rounded p-2"
               name={'comments'}
-              placeholder={t('common.commentsHere')}
+              placeholder={t('common.addComments')}
               rows={4}
               value={comments}
               onChange={(e) => setComments(e.target.value)}
             />
 
-            <TagsInputField label={t('common.recipient')} name={'tags'} />
+            <TagsInputField label={t('content.recipient')} name={'tags'} />
 
             <div className="mb-4 mt-4 flex items-center">
-              <CheckboxField id="cc" label={t('common.sendCC')} name="cc" />
+              <CheckboxField id="cc" label={t('content.sendCC')} name="cc" />
             </div>
             <div className="flex items-center">
               <Icon className="mr-3" name="info" />
-              <Text>{t('common.message')}</Text>
+              <Text>{t('content.copyToCommercial')}</Text>
             </div>
             <div className="flex justify-end">
               <Button variant="primary" onClick={openPreview}>

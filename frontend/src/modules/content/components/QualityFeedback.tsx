@@ -19,32 +19,46 @@ export const QualityFeedback: React.FC<QualityFeedbackProps> = ({
     handleNotesChange,
     handleBlur,
     checkboxOptions,
-  } = useQualityFeedback(vehicleItem, resetFlag, onValidatePicture, isModalOpen);
+  } = useQualityFeedback(
+    vehicleItem,
+    resetFlag,
+    onValidatePicture,
+    isModalOpen,
+  );
 
-  const values = qualityItems.filter((item) => item.checked).map((item) => item.value);
+  const values = qualityItems
+    .filter((item) => item.checked)
+    .map((item) => item.value);
 
   return (
-    <div key={resetFlag ? 'reset' : 'no-reset'} className="flex flex-col gap-2 pt-10">
+    <div
+      key={resetFlag ? 'reset' : 'no-reset'}
+      className="flex flex-col gap-2 pt-10"
+    >
       <Heading as="h3" className="pb-2" variant="h4">
-        {`${t('common.qualityFeedback')}:`}
+        {`${t('content.qualityFeedback')}:`}
       </Heading>
       <div className="mb-4">
         <CheckboxGroup
           className="flex flex-col gap-2"
-          options={checkboxOptions.filter((option) => option.value === QualityIssue.QualityGood)}
+          options={checkboxOptions.filter(
+            (option) => option.value === QualityIssue.QualityGood,
+          )}
           value={values}
           onChange={handleChange}
         />
       </div>
       <CheckboxGroup
         className="flex flex-col gap-2"
-        options={checkboxOptions.filter((option) => option.value !== QualityIssue.QualityGood)}
+        options={checkboxOptions.filter(
+          (option) => option.value !== QualityIssue.QualityGood,
+        )}
         value={values}
         onChange={handleChange}
       />
       <Textarea
         className="mt-4"
-        placeholder={t('common.addNotes') }
+        placeholder={t('common.addComments')}
         value={notes}
         onChange={handleNotesChange}
         onBlur={handleBlur}

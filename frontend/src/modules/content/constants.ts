@@ -74,62 +74,62 @@ export const PAGE_MESSAGES_MISSING_OPTIPIX_ACCESS = {
 
 export const EXTERIOR_QUALITY_OPTIONS: QualityCheckItem[] = [
   {
-    label: 'content.qualityFeedback.QualityGood',
+    label: 'content.qualityFeedbackIssues.qualityGood',
     value: QualityIssue.QualityGood,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.SunReflections',
+    label: 'content.qualityFeedbackIssues.sunReflections',
     value: QualityIssue.SunReflections,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.Angle',
+    label: 'content.qualityFeedbackIssues.angle',
     value: QualityIssue.Angle,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.Blurred',
+    label: 'content.qualityFeedbackIssues.blurred',
     value: QualityIssue.Blurred,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.PlatePositioning',
+    label: 'content.qualityFeedbackIssues.platePositioning',
     value: QualityIssue.PlatePositioning,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.PositioningPlatform360',
+    label: 'content.qualityFeedbackIssues.positioningPlatform360',
     value: QualityIssue.PositioningPlatform360,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.ImageNotProcessed',
+    label: 'content.qualityFeedbackIssues.imageNotProcessed',
     value: QualityIssue.ImageNotProcessed,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.Segmentation',
+    label: 'content.qualityFeedbackIssues.segmentation',
     value: QualityIssue.Segmentation,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.ExteriorLight',
+    label: 'content.qualityFeedbackIssues.exteriorLight',
     value: QualityIssue.ExteriorLight,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.EmbarrassingObject',
+    label: 'content.qualityFeedbackIssues.embarrassingObject',
     value: QualityIssue.EmbarrassingObject,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.Mode3In1',
+    label: 'content.qualityFeedbackIssues.mode3In1',
     value: QualityIssue.Mode3In1,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.WrongPosition',
+    label: 'content.qualityFeedbackIssues.wrongPosition',
     value: QualityIssue.WrongPosition,
     checked: false,
   },
@@ -137,27 +137,27 @@ export const EXTERIOR_QUALITY_OPTIONS: QualityCheckItem[] = [
 
 export const INTERIOR_QUALITY_OPTIONS: QualityCheckItem[] = [
   {
-    label: 'content.qualityFeedback.QualityGood',
+    label: 'content.qualityFeedbackIssues.qualityGood',
     value: QualityIssue.QualityGood,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.SunReflexion',
+    label: 'content.qualityFeedbackIssues.sunReflexion',
     value: QualityIssue.SunReflexion,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.PhotographersReflection',
+    label: 'content.qualityFeedbackIssues.photographerReflection',
     value: QualityIssue.PhotographersReflection,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.WrongAngle',
+    label: 'content.qualityFeedbackIssues.wrongAngle',
     value: QualityIssue.WrongAngle,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.ImageTooDark',
+    label: 'content.qualityFeedbackIssues.imageTooDark',
     value: QualityIssue.ImageTooDark,
     checked: false,
   },
@@ -165,12 +165,12 @@ export const INTERIOR_QUALITY_OPTIONS: QualityCheckItem[] = [
 
 export const PROTOCOL_QUALITY_OPTIONS: QualityCheckItem[] = [
   {
-    label: 'content.qualityFeedback.IncorrectProtocolCi',
+    label: 'content.qualityFeedbackIssues.incorrectProtocolCi',
     value: QualityIssue.IncorrectProtocolCi,
     checked: false,
   },
   {
-    label: 'content.qualityFeedback.TextInputSpecificProblem',
+    label: 'content.qualityFeedbackIssues.textInputSpecificProblem',
     value: QualityIssue.TextInputSpecificProblem,
     checked: false,
   },

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { QualityCheckItem, QualityFeedbackProps } from '../types';
+import { QualityCheckItem } from '../types';
 import {
   SaveQualityCheckMutationRequest,
   useSaveQualityCheckMutation,
@@ -14,26 +14,7 @@ import {
   PROTOCOL_QUALITY_OPTIONS,
 } from '../constants';
 import { KEYBOARD } from '@/constants/constants';
-
-// Function to generate quality options based on the content item position
-const generateQualityOptions = (
-  position: string | undefined,
-  isQualityGoodImage: boolean,
-  imageIssues: string[],
-): QualityCheckItem[] => {
-  const selectedQualityOptions =
-    position === CONTENT_ITEM_TYPE.EXTERIOR
-      ? [...EXTERIOR_QUALITY_OPTIONS, ...PROTOCOL_QUALITY_OPTIONS]
-      : [...INTERIOR_QUALITY_OPTIONS, ...PROTOCOL_QUALITY_OPTIONS];
-
-  return selectedQualityOptions.map((item) => ({
-    ...item,
-    checked:
-      item.value === QualityIssue.QualityGood
-        ? isQualityGoodImage
-        : imageIssues.includes(item.value),
-  }));
-};
+import { useTranslation } from '@/i18n';
 
 // Custom hook for managing quality feedback logic
 export const useQualityFeedback = (
@@ -42,6 +23,7 @@ export const useQualityFeedback = (
   onValidatePicture: () => void,
   isModalOpen: boolean,
 ) => {
+  const { t } = useTranslation();
   const { currentContentType, setCurrentContentType } = useContentType();
   const {
     contentType: position,
@@ -61,6 +43,29 @@ export const useQualityFeedback = (
     setCurrentContentType(position);
   }, [setCurrentContentType, position]);
 
+  // Function to generate quality options based on the content item position
+  const generateQualityOptions = (
+    position: string | undefined,
+    isQualityGoodImage: boolean,
+    imageIssues: string[],
+  ): QualityCheckItem[] => {
+    const selectedQualityOptions =
+      position === CONTENT_ITEM_TYPE.EXTERIOR
+        ? [...EXTERIOR_QUALITY_OPTIONS, ...PROTOCOL_QUALITY_OPTIONS]
+        : [...INTERIOR_QUALITY_OPTIONS, ...PROTOCOL_QUALITY_OPTIONS];
+
+    return selectedQualityOptions.map((item) => {
+      console.log(t(item.label));
+      return {
+        ...item,
+        label: t(item.label),
+        checked:
+          item.value === QualityIssue.QualityGood
+            ? isQualityGoodImage
+            : imageIssues.includes(item.value),
+      };
+    });
+  };
   // Memoized quality options based on current content type and quality check status
   const qualityOptions = useMemo(() => {
     return generateQualityOptions(

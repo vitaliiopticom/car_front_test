@@ -1,5 +1,12 @@
 import React, { FC, Fragment, useState } from 'react';
-import { Button, Heading, Image, Status, Text, Tooltip } from '@/components/elements';
+import {
+  Button,
+  Heading,
+  Image,
+  Status,
+  Text,
+  Tooltip,
+} from '@/components/elements';
 import { useTranslation } from '@/i18n';
 import { createFullNameFromUser } from '@/modules/users';
 import { cx } from '@/utils/classNames';
@@ -114,7 +121,7 @@ export const GalleryAside: FC<Props> = ({
           variant={'primary'}
           onClick={() => setIsModalOpen(true)}
         >
-          {t('common.sendFeedback')}
+          {t('content.sendFeedback')}
         </Button>
         <ModalSendFeedback
           isOpen={isModalOpen}
