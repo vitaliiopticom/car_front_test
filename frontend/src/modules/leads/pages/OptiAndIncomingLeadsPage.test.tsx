@@ -1,13 +1,13 @@
 import { test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import { LeadsPage } from './LeadsPage';
+import { OptiAndIncomingLeadsPage } from './OptiAndIncomingLeadsPage';
 import { LEADS_QUERY } from '../api/getLeads';
 
 test('LeadsPage renders without errors', () => {
   render(
     <MockedProvider mocks={[]} addTypename={false}>
-      <LeadsPage />
+      <OptiAndIncomingLeadsPage />
     </MockedProvider>,
   );
 
@@ -53,7 +53,7 @@ const mocks = [
 test('useGetLeadsQuery is called and handled correctly', async () => {
   render(
     <MockedProvider mocks={mocks} addTypename={false}>
-      <LeadsPage />
+      <OptiAndIncomingLeadsPage />
     </MockedProvider>,
   );
 

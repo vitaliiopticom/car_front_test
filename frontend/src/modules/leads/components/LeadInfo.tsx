@@ -41,7 +41,7 @@ const LeadInfo = ({
   data: Lead;
   onSubmit: (values: any) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const formValidation = useFormValidation();
   const genderOptions = getGenderOptions(t);
 
@@ -77,7 +77,7 @@ const LeadInfo = ({
   const defaultValues = {
     id: data.id,
     clientInformation: {
-      ...leadFormDefaultValues.clientInformation,
+      ...leadFormDefaultValues(i18n.language).clientInformation,
       ...data.clientInfo,
       language: data.clientInfo.language?.toLowerCase(),
     },

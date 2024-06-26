@@ -34,7 +34,7 @@ export const LeadFormModal: FC<Props> = ({
   submitLabel,
   isLoading,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const formValidation = useFormValidation();
 
   const warningModal = useDisclosure();
@@ -80,9 +80,9 @@ export const LeadFormModal: FC<Props> = ({
   );
 
   const defaultValues = {
-    ...leadFormDefaultValues,
-    ...lead,
-  } as LeadFormValuesBase;
+      ...leadFormDefaultValues(i18n.language),
+      ...lead,
+    } as LeadFormValuesBase;
 
   const formMethods = useForm({
     defaultValues,

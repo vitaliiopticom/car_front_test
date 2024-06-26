@@ -10,26 +10,28 @@ import {
 } from '@/components/shared';
 import { LeadLanguageSelect } from './LeadLanguageSelect';
 import { LANGS } from '@/i18n';
-import {getGenderOptions, genderOptions} from '../utils/leadUtils';
+import { getGenderOptions, genderOptions } from '../utils/leadUtils';
 
 /**
  * Default values for the lead form fields.
  */
-export const leadFormDefaultValues: Partial<LeadFormValuesBase> = {
-  tenantId: '',
-  // platform: 'Manually',
-  emailDetails: {
-    emailSubject: '',
-  },
-  clientInformation: {
-    title: genderOptions[1],
-    firstName: '',
-    lastName: '',
-    language: LANGS[0].code.toLowerCase(),
-    emails: [''],
-    telephones: [''],
-    mobiles: ['', ''],
-  },
+export const leadFormDefaultValues = (lan?: string): Partial<LeadFormValuesBase> => {
+  return {
+    tenantId: '',
+    // platform: 'Manually',
+    emailDetails: {
+      emailSubject: '',
+    },
+    clientInformation: {
+      title: genderOptions[1],
+      firstName: '',
+      lastName: '',
+      language: lan || LANGS[0].code.toLowerCase(),
+      emails: [''],
+      telephones: [''],
+      mobiles: ['', ''],
+    },
+  }
 };
 
 export const CREATE_LEAD_FORM_ID = 'createLeadForm';

@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { Button, Modal } from '@/components/elements';
 import {
@@ -27,6 +28,8 @@ import { useCreateLeadMutation } from '../api/createLead';
 import { LeadFormModal } from '../components/LeadFormModal';
 import { useTenant } from '@/modules/tenants';
 import { useDeleteLeadMutation } from '../api/deleteLeadById';
+import { routes } from '@/router/routesList';
+import IncomingLeadsList from '../components/IncomingLeadsList';
 
 const getParameters = (status?: LeadStateEnum) => {
   return {
@@ -41,35 +44,39 @@ const getParameters = (status?: LeadStateEnum) => {
   }
 };
 
-export const OptiLeadsPage: FC = () => {
+export const OptiAndIncomingLeadsPage: FC = () => {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
   const createModal = useDisclosure();
   const deleteModal = useDisclosure();
-
-  const [selectedLeads, setSelectedLeads] = useState<any[]>([]);
-
+  
+  const isIncomingLeads = pathname === routes.incomingLeads();
   const tenant = useTenant().tenant;
   const tenantId = tenant?.id || '';
 
+  const [selectedLeads, setSelectedLeads] = useState<any[]>([]);
+
   const leadsQuery = useGetLeadsQuery({
-    variables: { inputParameters: getParameters() }
+    variables: {
+      inputParameters: getParameters((isIncomingLeads ? LeadStateEnum.ToProcess : '') as LeadStateEnum)
+    }
   });
-  const handleClose = () => {
-    createModal.onClose();
-  };
 
   const [createLead, createLeadState] = useCreateLeadMutation({
-    onCompleted: handleClose,
+    onCompleted: createModal.onClose,
   });
 
   const [deleteLead, deleteLeadState] = useDeleteLeadMutation({
-    onCompleted: deleteModal.onClose,
+    onCompleted: () => {
+      deleteModal.onClose();
+      setSelectedLeads([]);
+    },
   });
 
   const handleDeleteLeads = (id?: string) => {
     deleteLead({
       variables: {
-          leadId: selectedLeads[0].id
+        leadId: selectedLeads[0].id
       }
     })
   }
@@ -101,9 +108,9 @@ export const OptiLeadsPage: FC = () => {
     <>
       <Page
         actions={
-          <Button onClick={createModal.onOpen}>{t('leads.addNew')}</Button>
+          !isIncomingLeads && <Button onClick={createModal.onOpen}>{t('leads.addNew')}</Button>
         }
-        title={`${t('leads.pageLabel')}: ${tenant?.name || ''}`}
+        title={`${t('leads.pageLabel')}: ${isIncomingLeads ? t('leads.incoming') : tenant?.name || ''}`}
       >
         <QueryDataLoader query={leadsQuery} keepPreviousData useCustomLoading>
           {({ data, isLoading, isRefetching }) => (
@@ -118,9 +125,8 @@ export const OptiLeadsPage: FC = () => {
                   recordsCount={data?.leads?.length}
                   onFiltersChange={handleChange}
                 >
-                  <LeadsList onTabChange={(status: LeadStateEnum) => {
-                    leadsQuery.refetch({ inputParameters: getParameters(status) })
-                  }}
+
+                  {isIncomingLeads ? <IncomingLeadsList
                     selectedLeads={selectedLeads}
                     setSelectedLeads={setSelectedLeads}
                     deleteLeads={
@@ -128,18 +134,31 @@ export const OptiLeadsPage: FC = () => {
                       // handleDeleteLeads
                     }
                   />
+
+
+                    : <LeadsList
+                      onTabChange={(status: LeadStateEnum) => {
+                        leadsQuery.refetch({ inputParameters: getParameters(status) })
+                      }}
+                      selectedLeads={selectedLeads}
+                      setSelectedLeads={setSelectedLeads}
+                      deleteLeads={
+                        () => deleteModal.onOpen()
+                        // handleDeleteLeads
+                      }
+                    />}
                 </DataView>
               )}
             </PaginationAdapter>
           )}
         </QueryDataLoader>
-        <LeadFormModal
+        {createModal.isOpen && <LeadFormModal
           isLoading={createLeadState.loading}
           isOpen={createModal.isOpen}
           title={t('leads.addNew')}
           onClose={createModal.onClose}
           onSubmit={handleCreateLead}
-        />
+        />}
         <Modal
           actions={[
             <Button
@@ -161,7 +180,7 @@ export const OptiLeadsPage: FC = () => {
 
           isOpen={deleteModal.isOpen}
           title={t('leads.deleteGroup')}
-        ><></></Modal>
+        >{null}</Modal>
       </Page>
     </>
   );
