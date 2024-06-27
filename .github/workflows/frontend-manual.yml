@@ -1,0 +1,60 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js manual Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    #If the current branch is not 'main', the job will run
+    if: github.ref != 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to Azure Container Registry
+        run: |
+          az acr login --name ${{ vars.REGISTRY_NAME }}
+
+      - name: Set env short sha
+        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
+      - name: Get the branch name
+        id: get_branch
+        run: |
+          TRANSFORMED_BRANCH_NAME=$(echo ${{ github.ref }} | sed 's|refs/heads/||' | tr '/' '_' | tr '-' '_')
+          echo $TRANSFORMED_BRANCH_NAME
+          IMAGE_VERSION=${TRANSFORMED_BRANCH_NAME}-$(date +'%Y%m%d%H%M').${SHORT_SHA}
+          echo $IMAGE_VERSION
+          echo "IMAGE_VERSION=$IMAGE_VERSION" >> $GITHUB_ENV
+      - name: Print transformed name
+        run: |
+          echo "Transformed branch name: $IMAGE_VERSION"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          platforms: linux/arm64
+          push: true
+          tags: ${{ vars.REGISTRY_NAME }}.azurecr.io/${{ vars.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+      - name: Add tag
+        run: |
+          git tag -a ${{ env.IMAGE_VERSION }} -m "Tagging ${{ env.IMAGE_VERSION }}"
+          git push origin ${{ env.IMAGE_VERSION }}
