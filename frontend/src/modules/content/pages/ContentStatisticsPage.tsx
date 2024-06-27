@@ -11,7 +11,7 @@ import { useGetVehicleFullStatisticsQuery } from '../api/getVehicleFullStatistic
 import { PhotographersList } from '../components/PhotographersList';
 import { StatisticsCardsList } from '../components/StatisticsCardsList';
 import { StatisticsCardsListSkeleton } from '../components/StatisticsCardsListSkeleton';
-import { StatisticsFilter } from '../components/StatisticsFilter';
+import { StatisticsFilter } from '@/common/components/StatisticsFilter';
 import { STATISTICS_DATE_RANGE_FILTER_DEFAULT } from '../constants';
 import { StatisticsDateFilters } from '../types';
 

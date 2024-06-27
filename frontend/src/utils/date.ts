@@ -10,6 +10,7 @@ import {
   parseJSON,
   set,
   startOfMonth,
+  Locale
 } from 'date-fns';
 import { de, es, fr } from 'date-fns/locale';
 
@@ -25,7 +26,7 @@ const localeMap: Record<FormatDateTimeLang, Locale> = {
 
 export const parseDate = (date: DateValue, iso?: boolean) => {
   if (!date) return null;
-
+// @ts-ignore
   const parsed = iso ? parseISO(date as string) : parseJSON(date);
 
   if (!parsed || !isValid(parsed)) return null;

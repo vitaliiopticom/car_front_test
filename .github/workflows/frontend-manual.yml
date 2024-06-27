@@ -9,6 +9,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    environment: local
 
     #If the current branch is not 'main', the job will run
     if: github.ref != 'refs/heads/main'
@@ -42,6 +43,13 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Set up .env file
+        run: |
+          echo VITE_API_URL_PRIVATE=${{ vars.VITE_API_URL_PRIVATE }} > ./frontend/.env
+          echo VITE_API_URL_PUBLIC=${{ vars.VITE_API_URL_PUBLIC }} >> ./frontend/.env
+          echo VITE_TRANSLATIONS_URL=/locales >> ./frontend/.env
+          cat ./frontend/.env
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6

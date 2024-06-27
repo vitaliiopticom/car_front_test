@@ -6,24 +6,31 @@ export type Lang = {
   icon: IconName;
 };
 
+export enum LangCode {
+  EN = 'en',
+  DE = 'de',
+  ES = 'es',
+  FR = 'fr'
+}
+
 export const LANGS: Lang[] = [
   {
-    code: 'en',
+    code: LangCode.EN,
     label: 'English',
     icon: 'gbFlag',
   },
   {
-    code: 'fr',
+    code: LangCode.FR,
     label: 'Français',
     icon: 'frFlag',
   },
   {
-    code: 'es',
+    code: LangCode.ES,
     label: 'Español',
     icon: 'esFlag',
   },
   {
-    code: 'de',
+    code: LangCode.DE,
     label: 'Deutsch',
     icon: 'deFlag',
   },

@@ -1,5 +1,8 @@
 export const ENV_CONFIG = {
   API_URL_PRIVATE: import.meta.env.VITE_API_URL_PRIVATE,
   API_URL_PUBLIC: import.meta.env.VITE_API_URL_PUBLIC,
+  APP_ENV: import.meta.env.VITE_APP_ENV,
+  SENTRY_DSN: import.meta.env.VITE_SENTRY_DSN,
+  SENTRY_TRACE_PROPAGATION: import.meta.env.VITE_SENTRY_TRACE_PROPAGATION,
   TRANSLATIONS_URL: import.meta.env.VITE_TRANSLATIONS_URL,
 };

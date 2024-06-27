@@ -53,6 +53,8 @@ export const TenantProvider: FC<Props> = ({ children }) => {
     [profile?.tenantAssignments, setTenantId, tenantId, isLoading],
   );
 
+  console.log(profile, '@@@@@@@@@@@', tenantId, defaultTenantId);
+
   useEffect(() => {
     const firstTenantId = value?.tenants?.[0]?.value;
 

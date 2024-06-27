@@ -69,6 +69,7 @@ export const DataSelectField = <D, Multi extends boolean>({
               onChange(e);
             }}
             {...rest}
+            value={field.value}
           />
         );
       }}

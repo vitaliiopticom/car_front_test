@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import cx from 'classnames';
 import { Tab } from '@headlessui/react';
 
 import {
@@ -12,6 +13,7 @@ export type TabsProps = {
   defaultIndex?: number;
   setSelectedTab?: (value: number) => void;
   isListBorder?: boolean;
+  listBorderClassName?: string;
 } & TabsContentsListProps &
   TabsTitlesListProps;
 
@@ -24,6 +26,7 @@ export const Tabs: FC<TabsProps> = ({
   isListBorder = true,
   listClassName,
   defaultIndex = 0,
+  listBorderClassName,
 }) => {
   return (
     <Tab.Group
@@ -37,7 +40,7 @@ export const Tabs: FC<TabsProps> = ({
         tabs={tabs}
       />
       {isListBorder && (
-        <div className="relative -top-0.5 h-[1px] w-full bg-secondary-tint-80" />
+        <div className={cx("relative -top-0.5 h-[1px] w-full bg-secondary-tint-80", listBorderClassName)} />
       )}
       <TabsContentList tabs={tabs} unmount={unmount} />
     </Tab.Group>

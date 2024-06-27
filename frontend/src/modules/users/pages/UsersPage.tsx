@@ -23,7 +23,7 @@ import {
   usersListFiltersDefaultValues,
 } from '../constants';
 import { CreateUserFormValues, UsersListFiltersType } from '../types';
-
+// import DesktopNotification from '@/components/elements/DesktopNotification/DesktopNotification';
 export const UsersPage: FC = () => {
   const { t } = useTranslation();
   const createModal = useDisclosure();
@@ -127,6 +127,11 @@ export const UsersPage: FC = () => {
         onClose={createModal.onClose}
         onSubmit={handleCreateUser}
       />
+      {/* <DesktopNotification
+        title="User Page"
+        message="A new user has been addeed"
+        icon="https://caropticom.com/images/logo_white.svg"
+      /> */}
     </Page>
   );
 };

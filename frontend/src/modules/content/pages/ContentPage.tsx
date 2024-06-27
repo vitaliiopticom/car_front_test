@@ -17,8 +17,8 @@ import { PHOTOBOX_STATUS } from '@/modules/companies';
 import { routes } from '@/router/routesList';
 import { endOfTheDay, formatDateToAPI } from '@/utils/date';
 
-import { useGetVehiclesQuery, VehicleCardType } from '../api/getVehicles';
-import { PaginationAndFilterSkeleton } from '../components/PaginationAndFilterSkeleton';
+import { useGetVehiclesQuery, VehicleCardType } from '@/common/api/getVehicles';
+import { PaginationAndFilterSkeleton } from '@/common/components/PaginationAndFilterSkeleton';
 import { QRCard } from '../components/QRCard';
 import { VehicleCardSkeleton } from '../components/VehicleCardSkeleton';
 import { VehicleList } from '../components/VehicleList';

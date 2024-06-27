@@ -6,7 +6,7 @@ import { useDataViewContext, useGetIsItemSelected } from '@/components/shared';
 import { useTranslation } from '@/i18n';
 import { PERMISSIONS, usePermissions } from '@/modules/auth';
 
-import { VehicleCardType } from '../api/getVehicles';
+import { VehicleCardType } from '@/common/api/getVehicles';
 import { Vehicle } from '../types';
 
 import { DownloadIconButton } from './DownloadIconButton';

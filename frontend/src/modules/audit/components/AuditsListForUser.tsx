@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react';
 
 import { Button, IconButton, Text, Tooltip } from '@/components/elements';
-import { IconFlag } from '@/components/elements/IconFlag/IconFlag';
+import { FlagCountry } from '@/components/elements/FlagCountry/FlagCountry';
 import { createTableColumns, DataView } from '@/components/shared';
 import { useTranslation } from '@/i18n';
 import { formatDateTime } from '@/utils/date';
@@ -24,7 +24,7 @@ export const AuditsListForUser: FC = () => {
         ch.accessor('companyCountryName', {
           header: () => t('common.country'),
           cell: ({ row }) => (
-            <IconFlag name={row.original?.companyCountryName} />
+            <FlagCountry name={row.original?.companyCountryName} />
           ),
         }),
         ch.accessor('auditType', {

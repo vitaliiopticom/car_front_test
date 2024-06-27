@@ -29,6 +29,7 @@ export const TabsTitlesList: FC<TabsTitlesListProps> = ({
               selected &&
                 'border-b-2 border-primary font-semibold text-primary outline-0',
               isNotClickable ? 'cursor-auto' : 'hover:text-primary-shade-40',
+              disabled ? 'text-gray-400' : '',
             )
           }
           disabled={disabled}

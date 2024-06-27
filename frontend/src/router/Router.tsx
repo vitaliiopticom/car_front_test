@@ -17,6 +17,8 @@ import { UsersRoutes } from '@/modules/users';
 
 import { IndexRoute } from './IndexRoute';
 import { routes } from './routesList';
+import { LeadsRoutes } from '@/modules/leads/routes';
+import { ProductRoutes } from '@/modules/product/routes';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,6 +40,9 @@ const router = createBrowserRouter(
         <Route element={<InvoicingRoutes />} path={`${routes.invoicing()}/*`} />
         <Route element={<UsersRoutes />} path={`${routes.users()}/*`} />
         <Route element={<CompaniesRoutes />} path={`${routes.companies()}/*`} />
+        <Route element={<LeadsRoutes />} path={`${routes.leads()}/*`} />
+        {/* <Route element={<LeadsRoutes />} path={`${routes.incomingLeads()}/*`} /> */}
+        <Route element={<ProductRoutes />} path={`${routes.product()}/*`} />
 
         <Route
           element={

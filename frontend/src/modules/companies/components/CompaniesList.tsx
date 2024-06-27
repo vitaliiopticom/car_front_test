@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ActionsMenu, IconButton } from '@/components/elements';
-import { IconFlag } from '@/components/elements/IconFlag/IconFlag';
+import { FlagCountry } from '@/components/elements/FlagCountry/FlagCountry';
 import { createTableColumns, DataView } from '@/components/shared';
 import { ContactModal } from '@/components/shared/ContactModal/ContactModal';
 import { ContactData } from '@/components/shared/ContactModal/types';
@@ -69,7 +69,7 @@ export const CompaniesList: FC<Props> = ({ hasPagination }) => {
       createTableColumns<Company>((ch) => [
         ch.accessor('country', {
           header: () => t('common.country'),
-          cell: ({ row }) => <IconFlag name={row.original.country?.name} />,
+          cell: ({ row }) => <FlagCountry name={row.original.country?.name} />,
         }),
         ch.accessor('companyName', {
           header: () => t('companies.companyAndParent'),

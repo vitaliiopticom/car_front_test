@@ -27,6 +27,7 @@ export type TableProps<D> = {
   hasDataViewPagination?: boolean;
   isLoading?: boolean;
   loadingSkeletonRows?: number;
+  onRowClick?: (row: D) => void;
 };
 
 export const Table = <D,>({
@@ -37,6 +38,7 @@ export const Table = <D,>({
   hasDataViewPagination,
   isLoading,
   loadingSkeletonRows,
+  onRowClick,
 }: TableProps<D>) => {
   const processedColumns = useMemo<TableColumn<D>[]>(() => {
     const baseColumns = [...columns];
@@ -61,7 +63,7 @@ export const Table = <D,>({
   return (
     <TableContainer hasDataViewPagination={hasDataViewPagination} table={table}>
       <TableHead table={table} />
-      <TableBody isLoading={isLoading} table={table} />
+      <TableBody isLoading={isLoading} table={table} onRowClick={onRowClick} />
     </TableContainer>
   );
 };

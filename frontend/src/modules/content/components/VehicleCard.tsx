@@ -9,8 +9,8 @@ import { cx } from '@/utils/classNames';
 import { formatDate } from '@/utils/date';
 import { bytesToMb } from '@/utils/file';
 
-import { VehicleCardType } from '../api/getVehicles';
-import { GeoLocationLink } from '../components/GeoLocationLink';
+import { VehicleCardType } from '@/common/api/getVehicles';
+import { GeoLocationLink } from '@/common/components/GeoLocationLink';
 import { PhotoInfoChip } from '../components/PhotoInfoChip';
 import { CONTENT_ITEM_TYPE, FALLBACK_IMAGE } from '../constants';
 import { ImageCount, PhotoType } from '../types';
@@ -84,7 +84,7 @@ export const VehicleCard: FC<Props> = ({
     },
   ];
 
-  const contentItemsCount = sum(imageCounts, (item) => item.count);
+  const contentItemsCount = sum(imageCounts, (item: any) => item.count);
   const numberOfFiles = `${contentItemsCount} ${t('common.files')}`;
   const archiveSize = `(${bytesToMb(
     processedImagesArchiveSize,

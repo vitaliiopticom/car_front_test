@@ -1,0 +1,34 @@
+/* Set default font-family */
+.app .ql-editor {
+    font-family: "Calibri";
+  }
+  
+  /* Set dropdown font-families */
+  
+  .ql-picker.ql-font .ql-picker-label[data-value="Calibri"]::before, 
+  .ql-picker.ql-font .ql-picker-item[data-value="Calibri"]::before
+  {
+      font-family: "Calibri", cursive;
+      content: "Calibri";
+  }
+  .ql-picker.ql-font .ql-picker-label[data-value="Raleway"]::before, 
+  .ql-picker.ql-font .ql-picker-item[data-value="Raleway"]::before
+  {
+      font-family: "Raleway", cursive;
+      content: "Raleway";
+  }
+  .ql-picker.ql-font .ql-picker-label[data-value="Roboto"]::before, 
+  .ql-picker.ql-font .ql-picker-item[data-value="Roboto"]::before
+  {
+      font-family: "Roboto", cursive;
+      content: "Roboto";
+  }
+  /* Set content font-families */
+  .ql-font-Raleway {
+    font-family: "Raleway";
+  }
+  .ql-font-Roboto {
+    font-family: "Roboto";
+  }
+  /* We do not set Courier since it is the default font */
+  

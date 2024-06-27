@@ -16,6 +16,11 @@ import { useLayout } from '../Layout/Layout';
 
 import { HeaderActions } from './elements/HeaderActions';
 import { HeaderIcon } from './elements/HeaderIcon';
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+} from '@novu/notification-center';
 
 type Props = {
   isSetupLayout?: boolean;
@@ -55,13 +60,20 @@ export const Header: FC<Props> = ({ isSetupLayout }) => {
       navigate(routes.index());
     }
   };
+  let id = '';
+  if (profile?.email === 'dealergroup.user.manager@outlook.com') {
+    id = '662a5a203f5e5be898328c66';
+  } else {
+    (id = '662b733567e0aa201816f6e3'), '662a5a203f5e5be898328c66';
+  }
+  id = '662b733567e0aa201816f6e3' + ',' + '662a5a203f5e5be898328c66';
 
   return (
     <header className="fixed top-0 z-sidebar flex w-full items-center justify-between bg-secondary pl-0 pr-0 lg:z-header">
       <div className="flex items-center">
         <Image
           alt="Logo"
-          className={cx('ml-6 mr-[52px] lg:block', !isSetupLayout && 'hidden')}
+          className={cx('mr-[52px] ml-6 lg:block', !isSetupLayout && 'hidden')}
           height="25"
           src="/images/logo_dark.svg"
           width="163"
@@ -86,6 +98,16 @@ export const Header: FC<Props> = ({ isSetupLayout }) => {
         />
       </div>
       <div className="flex items-center">
+        <NovuProvider subscriberId={id} applicationIdentifier={'-3p6ufyTjoOu'}>
+          <PopoverNotificationCenter
+            colorScheme={'light'}
+            onNotificationClick={() => navigate(routes.leads())}
+          >
+            {({ unseenCount }) => (
+              <NotificationBell unseenCount={unseenCount} />
+            )}
+          </PopoverNotificationCenter>
+        </NovuProvider>
         <Button
           className={cx(
             'font-normal text-secondary-tint-70 hover:text-white focus:text-white active:text-secondary-tint-70',
@@ -99,6 +121,7 @@ export const Header: FC<Props> = ({ isSetupLayout }) => {
           {t('header.support')}
         </Button>
         <LangSwitch />
+
         <HeaderActions
           currentCompanyId={tenant?.companyId || ''}
           isSetupLayout={isSetupLayout}

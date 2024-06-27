@@ -53,6 +53,7 @@ type Props<D, Filters extends FieldValuesType> = PropsWithChildren<
     isLoading?: boolean;
     isFetching?: boolean;
     handleItemSelectionDisabled?: DisableItemSelection<D>;
+    hidePagination?: boolean;
   }
 >;
 
@@ -120,6 +121,7 @@ export const DataView = <D, Filters extends FieldValuesType>({
   filterDefaultValues,
   handleItemSelectionDisabled = undefined,
   initialPageSize = DEFAULT_PAGE_SIZE,
+  hidePagination = false,
 }: Props<D, Filters>): ReactElement<Props<D, Filters> & Components> | null => {
   const { addView } = useDataViewStore.getState();
   const isViewDefined = useGetIsViewDefined(id);
@@ -161,13 +163,13 @@ export const DataView = <D, Filters extends FieldValuesType>({
         handleItemSelectionDisabled,
       }}
     >
-      <PaginationChangeHelper
+      {!hidePagination && <PaginationChangeHelper
         id={id}
         onChange={onChange}
         onFiltersChange={onFiltersChange}
         onPageChange={onPageChange}
         onSelectionChange={onSelectionChange}
-      />
+      />}
       {children}
     </DataViewContext.Provider>
   );

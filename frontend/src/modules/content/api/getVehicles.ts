@@ -73,7 +73,7 @@ export type GetVehiclesQueryResponse = {
 export const useGetVehiclesQuery = (
   options?: QueryHookOptions<GetVehiclesQueryResponse, GetVehiclesQueryRequest>,
 ) => {
-  return useQuery(VEHICLES_QUERY, {
+  return useQuery<GetVehiclesQueryResponse, GetVehiclesQueryRequest>(VEHICLES_QUERY, {
     ...options,
     notifyOnNetworkStatusChange: true,
   });

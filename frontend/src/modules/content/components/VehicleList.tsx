@@ -4,33 +4,25 @@ import { Avatar, Image, Link, Text } from '@/components/elements';
 import {
   createTableColumns,
   DataView,
-  DatePickerField,
-  InputField,
   useDataViewContext,
 } from '@/components/shared';
 import { useCopyToClipboard } from '@/hooks';
 import { useTranslation } from '@/i18n';
 import { PERMISSIONS, usePermissions } from '@/modules/auth';
-import { ChildCompaniesSelect } from '@/modules/companies';
-import { createFullNameFromUser, UserTenantSelect } from '@/modules/users';
+import { createFullNameFromUser } from '@/modules/users';
 import { routes } from '@/router/routesList';
 import { getStringWithSeparator, sum } from '@/utils/array';
 import { formatDate } from '@/utils/date';
 import { bytesToMb } from '@/utils/file';
 
-import { VehicleCardType } from '../api/getVehicles';
-import { BodyTypeSelect } from '../components/BodyTypeSelect';
-import { FuelTypeSelect } from '../components/FuelTypeSelect';
-import { ModelSelect } from '../components/ModelSelect';
-import { ModelYearSelect } from '../components/ModelYearSelect';
+import { VehicleFilterContentPage } from '@/common/components/filters'
+
+import { VehicleCardType } from '@/common/api/getVehicles';
 import { VehicleDeleteConfirmModal } from '../components/VehicleDeleteConfirmModal';
 import { FALLBACK_IMAGE } from '../constants';
 import { Vehicle, VehicleDetails } from '../types';
 
-import { GroupsSelect } from './GroupsSelect';
-import { MakeSelect } from './MakeSelect';
 import { SelectedVehiclesActionsPopup } from './SelectedVehiclesActionsPopup';
-import { UsersSelect } from './UsersSelect';
 import { VehicleActions } from './VehicleActions';
 import { VehicleCard } from './VehicleCard';
 
@@ -65,13 +57,9 @@ export const VehicleList: FC<Props> = ({ isLoading = false }) => {
   const canViewChildTenants = usePermissions(
     PERMISSIONS.OptiContent_View_ChildTenants,
   );
-  const canDeleteAllVehicles = usePermissions(
-    PERMISSIONS.OptiContent_Vehicles_Delete_All,
-  );
   const [vehicleDetailData, setVehicleDetailData] = useState<Vehicle>();
   const { isSubmitting, setIsSubmitting } = useDataViewContext();
 
-  const isMarketingManager = canDeleteAllVehicles || canViewChildTenants;
   const displayedCompanyName = canViewAllTenants || canViewChildTenants;
 
   const columns = useMemo(
@@ -120,7 +108,7 @@ export const VehicleList: FC<Props> = ({ isLoading = false }) => {
             const { processedImagesArchiveSize, detail } = row.original;
             const photosCount = sum(
               detail?.imageCounts,
-              (item) => item.count,
+              (item: any) => item.count,
               emptyRow.number,
             );
             const processedArchiveSize = bytesToMb(
@@ -206,93 +194,7 @@ export const VehicleList: FC<Props> = ({ isLoading = false }) => {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-row justify-between">
-        <DataView.RecordsCount />
-        <div className="flex gap-5">
-          <DataView.FiltersToggle />
-          <DataView.Toggle />
-        </div>
-      </div>
-      <DataView.Filters className="mb-0" hasToggle>
-        <DataView.FilterGroup title={t('content.filterGroupTitleGeneral')}>
-          <DatePickerField
-            isDisabled={isLoading}
-            label={t('content.filter.startDate')}
-            name="dateFrom"
-          />
-          <DatePickerField
-            isDisabled={isLoading}
-            label={t('content.filter.endDate')}
-            name="dateTo"
-            setEndOfDay
-          />
-          <InputField
-            disabled={isLoading}
-            endIcon="search"
-            name="vIN"
-            placeholder={t('content.filter.byVin')}
-          />
-          {canViewChildTenants && (
-            <ChildCompaniesSelect
-              disabled={isLoading}
-              name="tenantIds"
-              placeholder={t('content.filter.ChildCompanies')}
-              isMultiple
-            />
-          )}
-          {canViewAllTenants && (
-            <>
-              <GroupsSelect
-                disabled={isLoading}
-                name="parentTenantIds"
-                placeholder={t('companies.parentEntity')}
-                isMultiple
-              />
-              <UserTenantSelect
-                disabled={isLoading}
-                name="tenantIds"
-                placeholder={t('common.company')}
-                isMultiple
-              />
-            </>
-          )}
-          {(canViewAllTenants || isMarketingManager) && (
-            <UsersSelect
-              disabled={isLoading}
-              name="userIds"
-              placeholder={t('content.filter.byUsersName')}
-              isMultiple
-            />
-          )}
-        </DataView.FilterGroup>
-        <DataView.FilterGroup title={t('content.filterGroupTitleCarRelated')}>
-          <MakeSelect
-            disabled={isLoading}
-            name="makes"
-            placeholder={t('content.filter.makes')}
-          />
-          <ModelSelect
-            disabled={isLoading}
-            name="models"
-            placeholder={t('content.filter.model')}
-          />
-          <ModelYearSelect
-            disabled={isLoading}
-            name="modelYears"
-            placeholder={t('content.filter.modelYear')}
-          />
-          <BodyTypeSelect
-            disabled={isLoading}
-            name="bodyTypes"
-            placeholder={t('content.filter.bodyType')}
-          />
-          <FuelTypeSelect
-            disabled={isLoading}
-            name="fuelTypes"
-            placeholder={t('content.filter.fuelType')}
-          />
-        </DataView.FilterGroup>
-      </DataView.Filters>
+      <VehicleFilterContentPage isLoading={isLoading} />
       <DataView.Table columns={columns} hasRowSelection />
       <DataView.Grid<VehicleCardType>>
         {({ recordsCount, data }) => (
