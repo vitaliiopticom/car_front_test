@@ -19,6 +19,7 @@ export const PERMISSIONS = {
   OptiPix_AccessOptiPix: 'OptiPix_AccessOptiPix',
   OptiContent_Vehicles_Delete_Own: 'OptiContent_Vehicles_Delete_Own',
   OptiContent_Vehicles_Delete_All: 'OptiContent_Vehicles_Delete_All',
+  OptiContent_QualityChecker: 'OptiContent_QualityChecker',
   Module_Users: 'Module_Users',
   Users_View: 'Users_View',
   Users_View_AllTenants: 'Users_View_AllTenants',

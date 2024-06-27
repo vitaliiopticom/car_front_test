@@ -22,6 +22,10 @@ export const ContentPage = () => {
     PERMISSIONS.OptiContent_View_AllPhotos,
   );
 
+  const canViewQualityCheck = usePermissions(
+    PERMISSIONS.OptiContent_QualityChecker,
+  );
+
   const [selectedTab, setSelectedTab] = useState(0);
 
   const tabs = [
@@ -29,10 +33,14 @@ export const ContentPage = () => {
       title: t('content.automobiles'),
       content: <ContentAutomobileTab />,
     },
-    {
-      title: t('content.qualityCheck'),
-      content: <ContentQualityCheckTab />,
-    },
+    ...(canViewQualityCheck
+      ? [
+          {
+            title: t('content.qualityCheck'),
+            content: <ContentQualityCheckTab />,
+          },
+        ]
+      : []),
   ];
 
   const isPhotoBoxReady = true;

@@ -42,6 +42,10 @@ export const ContentDetailPage: FC = () => {
     PERMISSIONS.OptiContent_View_AllTenants,
   );
 
+  const isQualityChecker = usePermissions(
+    PERMISSIONS.OptiContent_QualityChecker,
+  );
+
   const getVehicleByIdQuery = useGetVehicleByIdQuery({
     variables: { vehicleId: id },
   });
@@ -74,7 +78,11 @@ export const ContentDetailPage: FC = () => {
   };
 
   useEffect(() => {
-    if (vehicle && vehicle.photoQualityCheckerUserId === null) {
+    if (
+      vehicle &&
+      vehicle.photoQualityCheckerUserId === null &&
+      isQualityChecker
+    ) {
       handleAssignUser(vehicle.id, profile?.id || '');
     }
   }, [getVehicleByIdQuery.data]);
@@ -135,7 +143,9 @@ export const ContentDetailPage: FC = () => {
               </Text>
             </div>
           ) : (
-            <VehicleDetailSkeletons type={VEHICLE_DETAILS_SKELETON_TYPE.HEADER} />
+            <VehicleDetailSkeletons
+              type={VEHICLE_DETAILS_SKELETON_TYPE.HEADER}
+            />
           )
         }
         title={vehicleDetailData?.vin}

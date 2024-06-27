@@ -11,6 +11,7 @@ import { useTranslation } from '@/i18n';
 import { ContentItemType } from '../../../types';
 import { useContentType } from '@/modules/content/pages/ContentTypeContext';
 import { useUpdateVehicleImageTypeMutation } from '@/modules/content/api/updateVehicleImageType';
+import {PERMISSIONS, usePermissions} from "@/modules/auth";
 
 const contentItemTypes: Record<ContentItemType, string> = {
   EXTERIOR: 'content.exterior',
@@ -34,6 +35,9 @@ export const GalleryContentDetails: FC<Props> = ({
   vehicleId,
   vehicleImageId,
 }) => {
+  const canViewQualityCheck = usePermissions(
+    PERMISSIONS.OptiContent_QualityChecker,
+  );
   const { t } = useTranslation();
   const { currentContentType, setCurrentContentType } = useContentType();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -106,6 +110,7 @@ export const GalleryContentDetails: FC<Props> = ({
         <Text className="mr-2 text-white">
           {t(currentContentType || 'content.unknown')}
         </Text>
+        {canViewQualityCheck && (
         <IconButton
           iconClassName="text-primary"
           name="editPencil"
@@ -113,6 +118,7 @@ export const GalleryContentDetails: FC<Props> = ({
           variant="ghost"
           onClick={handleChangeContentTypeClick}
         />
+      )}
       </div>
       <Modal
         actions={<Button onClick={handleSave}>{t('common.save')}</Button>}
