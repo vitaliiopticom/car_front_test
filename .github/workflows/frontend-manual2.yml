@@ -56,7 +56,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./frontend
-          platforms: linux/arm64
           push: true
           tags: ${{ vars.REGISTRY_NAME }}.azurecr.io/${{ vars.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
       - name: Configure Git
