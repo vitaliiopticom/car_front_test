@@ -14,6 +14,7 @@ jobs:
       matrix:
         platform:
           - linux/arm64
+          - linux/amd64
 
     #If the current branch is not 'main', the job will run
     if: github.ref != 'refs/heads/main'
