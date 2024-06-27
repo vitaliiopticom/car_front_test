@@ -45,6 +45,9 @@ jobs:
         run: |
           echo "Transformed branch name: $IMAGE_VERSION"
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Set up .env file
         run: |
           echo VITE_API_URL_PRIVATE=${{ vars.VITE_API_URL_PRIVATE }} > ./frontend/.env
@@ -58,6 +61,7 @@ jobs:
           context: ./frontend
           push: true
           tags: ${{ vars.REGISTRY_NAME }}.azurecr.io/${{ vars.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          platforms: ${{ matrix.platform }}
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions'
